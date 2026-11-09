@@ -22,7 +22,7 @@ def build_signal_message(
     confidence: float,
 ) -> str:
     return (
-        f"**[{symbol} {kline_type}] {side}**\n"
+        f"[{symbol} {kline_type}] {side}\n"
         f"ts={ts} | close={close:.4f}\n"
         f"bias={bias:.5f} | thr=±{bias_threshold}\n"
         f"total_votes={total_votes} / 21 | confidence={confidence:.3f}"

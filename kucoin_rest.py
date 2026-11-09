@@ -83,14 +83,21 @@ class KuCoinREST:
         start_at: Optional[int] = None,
         end_at: Optional[int] = None,
     ) -> List[Candle]:
-        params: Dict[str, Any] = {"symbol": symbol, "type": kline_type}
+        params: Dict[str, Any] = {
+            "symbol": symbol,
+            "tradeType": "SPOT",
+            "klineType": "TRADE",
+            "interval": kline_type,
+        }
         if start_at is not None:
             params["startAt"] = int(start_at)
         if end_at is not None:
             params["endAt"] = int(end_at)
 
-        j = self._request_json("GET", "/api/v1/market/candles", params=params)
-        rows = j.get("data", [])
+        j = self._request_json("GET", "/api/ua/v2/market/kline", params=params)
+        if j.get("code") != "200000":
+            raise RuntimeError(f"KuCoin kline request failed: {j.get('code')} {j.get('msg', '')}")
+        rows = j["data"]["list"]
 
         candles: List[Candle] = []
         for r in rows:
@@ -98,9 +105,9 @@ class KuCoinREST:
                 Candle(
                     ts=int(r[0]),
                     open=float(r[1]),
-                    close=float(r[2]),
-                    high=float(r[3]),
-                    low=float(r[4]),
+                    high=float(r[2]),
+                    low=float(r[3]),
+                    close=float(r[4]),
                     volume=float(r[5]),
                     turnover=float(r[6]),
                 )
