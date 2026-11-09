@@ -1,10 +1,19 @@
-## Telegram credentials
+# ABM Score Signal Telegram (1h)
 
-Add your Telegram bot token and chat IDs to the local `crendetials.yml` file in the project root. Replace the example values with your own.
+Telegram BUY and SELL alerts from a 21-vote score on closed 1-hour KuCoin spot candles. The default pair is `PAXG-USDT`.
+
+## Setup
+
+```sh
+python -m pip install numpy pandas requests PyYAML ta
+```
+
+Create `crendetials.yml` beside `config.py` with your bot token and chat IDs. The first chat receives startup and heartbeat messages.
 
 ```yaml
 TELEGRAM_BOT_TOKEN: "your-bot-token"
 CHAT_IDS:
   - 123456789
-  - 987654321
 ```
+
+Run `python main.py`.
