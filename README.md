@@ -1,6 +1,12 @@
 # ABM Score Signal Telegram (1h)
 
-Telegram BUY and SELL alerts from a 21-vote score on closed 1-hour KuCoin spot candles. The default pair is `PAXG-USDT`.
+The bot monitors `PAXG-USDT` on KuCoin spot and sends Telegram alerts from closed 1-hour candles.
+
+## How signals work
+
+The bot uses Heikin Ashi candles by default. It combines 21 votes from moving averages, RSI, MACD, Bollinger Bands, breakouts, and rate of change. The bias score is the sum of the votes divided by 21.
+
+With the default thresholds, the bot sends a BUY alert when the bias crosses above `+0.20` and a SELL alert when it crosses below `-0.20`. Both alerts go to all configured chats.
 
 ## Setup
 
